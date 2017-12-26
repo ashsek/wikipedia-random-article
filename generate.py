@@ -17,19 +17,33 @@ def randomgenerate():
     print('Retrieving', url)
     connection = urllib.request.urlopen(url)
     data = connection.read().decode()
-    print('Retrieved', len(data), 'characters')
+    print('..........')
+    print('Retrieved')
+    print('===========================================')
 
     try:
         js = json.loads(data)
     except:
         js = None
+    j = len(js["query"]['random'])
+    i = 0
+    k = 0
     
-    Title = js["query"]['random'][0]['title']
-    article_id = js["query"]['random'][0]['id']
-    
-    y = input('Do you want to read about '+ Title)
-
-    if y.lower() == 'yes':
-        webbrowser.open(url2 + str(article_id), new=2)
-    else:
-        randomgenerate()
+    while i < j:
+        
+        Title = js["query"]['random'][i]['title']
+        article_id = js["query"]['random'][i]['id']
+        if k == 0:
+            print('List of articles in line:')
+        while k < j:
+            print(js["query"]['random'][k]['title'])
+            k += 1
+        print('--------------------------------------')
+        y = input('Do you want to read about '+ Title + ':')
+        
+        if y.lower() == 'yes':
+            print('opening browser....')
+            webbrowser.open(url2 + str(article_id), new=2)
+            break
+        else:
+            i += 1
